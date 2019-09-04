@@ -58,14 +58,11 @@ class TodoListViewController: UITableViewController {
         let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-            //what will happen once th user clicks the Add Item buttonon our UIAlert.
+            //what will happen once th user clicks the Add Item button on our UIAlert.
             let newItem = Item(context: self.context)
             newItem.title = textField.text!
             newItem.done = false
             self.itemArray.append(newItem)
-            
-            let encoder = PropertyListEncoder()
-            
             self.saveItems()
         }
         
@@ -84,10 +81,10 @@ class TodoListViewController: UITableViewController {
         do {
             try context.save()
         } catch {
-            print("Error saving context, \(error)")
+            print("Error saving context (Item), \(error)")
         }
         
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
     
     func loadItems(with request : NSFetchRequest<Item> = Item.fetchRequest()) {
@@ -95,7 +92,7 @@ class TodoListViewController: UITableViewController {
         do {
             itemArray = try context.fetch(request)
         } catch {
-            print("Error fetching data from context. \(error)")
+            print("Error fetching data from context (Item). \(error)")
         }
         
         tableView.reloadData()
